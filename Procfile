@@ -1,2 +1,2 @@
-web: pics_db.wsgi
+web: pics_api.wsgi
 release: python manage.py migrate
