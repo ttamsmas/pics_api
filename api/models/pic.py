@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 TAGS = (
-    ('people','people'),
-    ('pets', 'pets'),
-    ('nature','nature'),
-    ('action','action'),
-    ('lifestyle','lifestyle'),
+    ('People','People'),
+    ('Pets', 'Pets'),
+    ('Nature','Nature'),
+    ('Action','Action'),
+    ('Lifestyle','Lifestyle'),
 )
 
 class Pic(models.Model):
