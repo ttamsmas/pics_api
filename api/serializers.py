@@ -3,11 +3,17 @@ from rest_framework import serializers
 
 from .models.mango import Mango
 from .models.user import User
+from .models.pic import Pic
 
 class MangoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mango
         fields = ('id', 'name', 'color', 'ripe', 'owner')
+
+class PicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pic
+        fields = ('id', 'caption', 'tag', 'imgLink', 'owner')
 
 class UserSerializer(serializers.ModelSerializer):
     # This model serializer will be used for User creation
