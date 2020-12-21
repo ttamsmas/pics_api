@@ -15,6 +15,11 @@ class PicSerializer(serializers.ModelSerializer):
         model = Pic
         fields = ('id', 'caption', 'tag', 'imgLink', 'owner')
 
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = ('id', 'user', 'pic')
+
 class UserSerializer(serializers.ModelSerializer):
     # This model serializer will be used for User creation
     # The login serializer also inherits from this serializer
