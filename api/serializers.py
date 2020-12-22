@@ -16,7 +16,7 @@ class PicSerializer(serializers.ModelSerializer):
         model = Pic
         fields = '__all__'
 
-class PicReadSerializer(serializers.ModelSerializer):
+class PicReadSerializer(PicSerializer):
     owner = serializers.StringRelatedField()
     likes = serializers.StringRelatedField(many=True)
 
