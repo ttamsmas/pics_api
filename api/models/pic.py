@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from .user import User
 
 TAGS = (
     ('People','People'),
@@ -20,9 +21,9 @@ class Pic(models.Model):
   users = models.ManyToManyField(
   'User',
   blank=True,
-  related_name='pics',
+  related_name='likes',
   through='Like',
-  through_fields=('pic_id', 'owner_id')
+  through_fields=('pic_id', 'user_id')
   )
 
 # to use a like button, we'll need a new class so a user can own the like or else they can like it an infinite number of times
@@ -31,11 +32,12 @@ class Pic(models.Model):
     # This must return a string
     return f"The Pic named '{self.caption}' is {self.tag} in color. It is {self.imgLink} that it is ripe."
 
-  def as_dict(self):
-    """Returns dictionary version of Pic models"""
-    return {
-        'id': self.id,
-        'caption': self.caption,
-        'tag': self.tag,
-        'imgLink': self.imgLink
-    }
+  # def as_dict(self):
+  #   """Returns dictionary version of Pic models"""
+  #   return {
+  #       'id': self.id,
+  #       'caption': self.caption,
+  #       'tag': self.tag,
+  #       'imgLink': self.imgLink,
+  #       'user': self.users
+    # }

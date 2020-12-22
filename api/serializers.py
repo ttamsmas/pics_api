@@ -18,12 +18,9 @@ class PicSerializer(serializers.ModelSerializer):
 
 class PicReadSerializer(PicSerializer):
     owner = serializers.StringRelatedField()
-    likes = serializers.StringRelatedField(many=True)
-
 
 class UserSerializer(serializers.ModelSerializer):
-    likes = serializers.StringRelatedField(many=True)
-    pics = serializers.StringRelatedField()
+    likes = PicReadSerializer(many=True, read_only=True)
     # This model serializer will be used for User creation
     # The login serializer also inherits from this serializer
     # in order to require certain data for login
@@ -31,19 +28,13 @@ class UserSerializer(serializers.ModelSerializer):
         # get_user_model will get the user model (this is required)
         # https://docs.djangoproject.com/en/3.0/topics/auth/customizing/#referencing-the-user-model
         model = get_user_model()
-        fields = ('id', 'email', 'password')
+        fields = ('id', 'email', 'password', 'pics', 'likes')
         extra_kwargs = { 'password': { 'write_only': True, 'min_length': 5 } }
 
     # This create method will be used for model creation
     def create(self, validated_data):
         return get_user_model().objects.create_user(**validated_data)
 
-class LikeSerializer(serializers.ModelSerializer):
-    owner = UserSerializer(read_only=True, source='user_id')
-    pic = PicReadSerializer(read_only=True, source='pic_id')
-    class Meta:
-        model = Like
-        fields = ('id', 'owner', 'pic')
 
 class UserRegisterSerializer(serializers.Serializer):
     # Require email, password, and password_confirmation for sign up
@@ -66,3 +57,12 @@ class ChangePasswordSerializer(serializers.Serializer):
     model = get_user_model()
     old = serializers.CharField(required=True)
     new = serializers.CharField(required=True)
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = '__all__'
+
+class LikeReadSerializer(LikeSerializer):
+    owner = UserSerializer(read_only=True, source='user_id')
+    pic = PicReadSerializer(read_only=True, source='pic_id')

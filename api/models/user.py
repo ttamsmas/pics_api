@@ -63,7 +63,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-
     # Any time we call User.objects (such as in objects.all() or objects.filter())
     # make sure to use the custom user manager we created.
     objects = UserManager()
@@ -75,6 +74,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # This refers to the fields that are prompted for when creating a superuser.
     # https://docs.djangoproject.com/en/3.0/topics/auth/customizing/#django.contrib.auth.models.CustomUser.REQUIRED_FIELDS
     # REQUIRED_FIELDS = ['name']
+
 
     # Standard Python: We'll create a string representation so when
     # the class is output we'll get something meaningful.
