@@ -8,7 +8,7 @@ from django.contrib.auth import get_user, authenticate, login, logout
 from django.middleware.csrf import get_token
 
 from ..models.pic import Pic
-from ..serializers import PicSerializer, UserSerializer
+from ..serializers import PicSerializer, UserSerializer, PicReadSerializer
 
 # Create your views here.
 class Pics(generics.ListCreateAPIView):
@@ -22,7 +22,7 @@ class Pics(generics.ListCreateAPIView):
         # May want to change how this line works to allow users to see all pics from accounts they follow
         pics = Pic.objects.filter(owner=request.user.id)
         # Run the data through the serializer
-        data = PicSerializer(pics, many=True).data
+        data = PicReadSerializer(pics, many=True).data
         return Response({ 'pics': data })
 
     def post(self, request):
@@ -50,7 +50,7 @@ class PicDetail(generics.RetrieveUpdateDestroyAPIView):
             raise PermissionDenied('Unauthorized, you do not own this pic')
 
         # Run the data through the serializer so it's formatted
-        data = PicSerializer(pic).data
+        data = PicReadSerializer(pic).data
         return Response({ 'pic': data })
 
     def delete(self, request, pk):

@@ -4,6 +4,7 @@ from rest_framework import serializers
 from .models.mango import Mango
 from .models.user import User
 from .models.pic import Pic
+from .models.like import Like
 
 class MangoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,14 +14,16 @@ class MangoSerializer(serializers.ModelSerializer):
 class PicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pic
-        fields = ('id', 'caption', 'tag', 'imgLink', 'owner')
+        fields = '__all__'
 
-class LikeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Like
-        fields = ('id', 'user', 'pic')
+class PicReadSerializer(serializers.ModelSerializer):
+    owner = serializers.StringRelatedField()
+    likes = serializers.StringRelatedField(many=True)
+
 
 class UserSerializer(serializers.ModelSerializer):
+    likes = serializers.StringRelatedField(many=True)
+    pics = serializers.StringRelatedField()
     # This model serializer will be used for User creation
     # The login serializer also inherits from this serializer
     # in order to require certain data for login
@@ -34,6 +37,13 @@ class UserSerializer(serializers.ModelSerializer):
     # This create method will be used for model creation
     def create(self, validated_data):
         return get_user_model().objects.create_user(**validated_data)
+
+class LikeSerializer(serializers.ModelSerializer):
+    user_id = UserSerializer(read_only=True, source='user_id')
+    pic_id = PicReadSerializer(read_only=True, source='pic_id')
+    class Meta:
+        model = Like
+        fields = ('id', 'user_id', 'pic_id')
 
 class UserRegisterSerializer(serializers.Serializer):
     # Require email, password, and password_confirmation for sign up
