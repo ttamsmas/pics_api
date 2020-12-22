@@ -1,15 +1,15 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models.mango import Mango
+# from .models.mango import Mango
 from .models.user import User
 from .models.pic import Pic
 from .models.like import Like
 
-class MangoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Mango
-        fields = ('id', 'name', 'color', 'ripe', 'owner')
+# class MangoSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Mango
+#         fields = ('id', 'name', 'color', 'ripe', 'owner')
 
 class PicSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,11 +39,11 @@ class UserSerializer(serializers.ModelSerializer):
         return get_user_model().objects.create_user(**validated_data)
 
 class LikeSerializer(serializers.ModelSerializer):
-    user_id = UserSerializer(read_only=True, source='user_id')
-    pic_id = PicReadSerializer(read_only=True, source='pic_id')
+    owner = UserSerializer(read_only=True, source='user_id')
+    pic = PicReadSerializer(read_only=True, source='pic_id')
     class Meta:
         model = Like
-        fields = ('id', 'user_id', 'pic_id')
+        fields = ('id', 'owner', 'pic')
 
 class UserRegisterSerializer(serializers.Serializer):
     # Require email, password, and password_confirmation for sign up

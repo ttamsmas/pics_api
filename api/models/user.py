@@ -62,13 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    pics = models.ManyToManyField(
-    'Pic',
-    blank=True,
-    related_name='likes',
-    through='Like',
-    through_fields=('user_id', 'pic_id')
-    )
+
 
     # Any time we call User.objects (such as in objects.all() or objects.filter())
     # make sure to use the custom user manager we created.

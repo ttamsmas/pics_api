@@ -3,11 +3,11 @@ from django.contrib.auth import get_user_model
 from .pic import Pic
 
 class Like(models.Model):
-  user_id = models.ForeignKey(
+  owner = models.ForeignKey(
       get_user_model(),
       on_delete=models.CASCADE
   )
-  pic_id = models.ForeignKey(Pic, on_delete=models.CASCADE)
+  pic = models.ForeignKey(Pic, on_delete=models.CASCADE, related_name='pics')
   created = models.DateTimeField(auto_now_add=True)
 
   def as_dict(self):

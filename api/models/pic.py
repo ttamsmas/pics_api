@@ -20,9 +20,9 @@ class Pic(models.Model):
   users = models.ManyToManyField(
   'User',
   blank=True,
-  related_name='likes',
+  related_name='pics',
   through='Like',
-  through_fields=('pic_id', 'user_id')
+  through_fields=('pic_id', 'owner_id')
   )
 
 # to use a like button, we'll need a new class so a user can own the like or else they can like it an infinite number of times
