@@ -64,5 +64,5 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class LikeReadSerializer(LikeSerializer):
-    owner = UserSerializer(read_only=True, source='user_id')
+    owner = UserSerializer(read_only=True)
     pic = PicReadSerializer(read_only=True, source='pic_id')

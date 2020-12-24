@@ -23,7 +23,7 @@ class Pic(models.Model):
   blank=True,
   related_name='likes',
   through='Like',
-  through_fields=('pic_id', 'user_id')
+  through_fields=('pic_id', 'owner')
   )
 
 # to use a like button, we'll need a new class so a user can own the like or else they can like it an infinite number of times
