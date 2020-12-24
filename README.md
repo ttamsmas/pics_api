@@ -12,6 +12,8 @@ This PostgreSQL Database was developed to store and relay information related to
 ## Table of Contents
 
  - Important Links
+ - Local Installation
+ - Authentication End Points
  - Planning Story
  - User Stories
  - Technologies Used
@@ -29,6 +31,40 @@ This PostgreSQL Database was developed to store and relay information related to
 [Client Repository](https://github.com/ttamsmas/pics_app)
 
 [Server Repository](https://github.com/ttamsmas/pics_api)
+
+---
+
+## Local Installation
+
+ 1. Fork & Clone this repository
+ 2. Checkout to a new branch & ```git init```
+ 3. Launch python shell with ```pipenv shell```
+ 4. Install Dependancies via ```pipenv install```
+ 5. Create a Local SQL Database:
+     - launch PostgreSQL with ```psql```
+     - create Database with ```CREATE DATABASE "pics_db";```
+     - exit PostgreSQL with ```/q```
+ 6. Prepare migrations with ```python manage.py makemigrations```
+ 7. Prepare migrations with ```python manage.py migrate```
+ 8. Run local server with ```python manage.py runserver```
+
+---
+
+## Authentication End Points
+
+| Verb   |      URI Pattern      |  Controller#Action |
+|----------|:-------------:|------:|
+| POST |  /sign-up/ | users#signup |
+| POST |    /sign-in/   |   users#signin |
+| PATCH | /change-pw/ |   users#changepw |
+| DELETE |  /sign-out/ | users#signout |
+| GET |    /pics/   |   pics#index |
+| POST |    /pics/   |   pics#create |
+| PATCH | /pics/:id/ |    pics#update |
+| DELETE |  /pics/:id/ | pics#delete |
+| GET |    /likes/   |   likes#index |
+| POST | /likes/ |    likes#create |
+| DELETE |  /likes/:id/ | likes#delete |
 
 ---
 
